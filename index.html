@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c54527c30a.js" crossorigin="anonymous"></script>
+    <style>
+       .bk{
+        background-color:rgb(203, 168, 236);
+       }
+        table{
+            width: 80%;
+            border-radius: 7px;
+            margin: 10px;
+        }
+        td{
+            
+            padding:10px;
+            margin: 5px;
+            background-color:rgb(230, 190, 88);
+            color:black;
+        }
+        th{
+            padding:10px;
+            margin: 5px;
+            background-color:black;
+            color:white;
+        }
+        .form{
+            width: 380px;
+            height: 380px;
+            background-color:rgb(230, 190, 88);
+            border-radius: 8px;
+            padding-left: 30px;
+            margin-top: 80px;
+            margin-left: 50px;
+
+        }
+        .in{
+            width: 320px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+            margin-top: 5px;
+        }
+        .btn{
+            margin-left: 20px;
+        }
+        .data{
+            display: flex;
+        }
+        .tb{
+            margin-left: 200px;
+            margin-top: 80px;
+            border-radius: 10px;
+            border: none;
+            
+        }
+        @media screen and (max-width:1200px){
+            .form{
+
+                    display: flex;
+                    justify-content:left;
+                    position: absolute;
+                    left: 10px;
+            }    
+            table{
+                    width: 90%;
+                    position: absolute;
+                    bottom: 0%;
+                    top: 60%;
+                    /* display: flex; */
+                    right: 0%;
+                    
+                }
+                th,td{
+                    width: 100%;
+                }
+                .tb{
+                    width: 100%;
+                    position: absolute;
+                    right: 0%;
+                 }
+                 button{
+                    width: 70%;
+                    display:flex;
+                    justify-content: center;
+                 }
+                
+                /* th{
+                    width: 100%;
+                    
+                } */ 
+                
+             }
+
+    </style>
+</head>
+<body class="bk">
+      <div class="data">
+           <div class="form">
+               <form onsubmit="formsubmit()">
+                    <label>Employee Name :</label><br><input type="text" name="fullName" id="fullName" placeholder="FullName" class="in" required><br><br>
+                    <label>Email :</label><br><input type="email" name="email" id="email" placeholder="email" class="in"required><br><br>
+                    <label>Mobile No.:</label><br><input type="text" name="mobile" id="mobile" placeholder="mobile" class="in"required><br><br>
+                    <label>City :</label><br><input type="text" name="city" id="city" placeholder="city" class="in"required><br><br>
+                    <input class="btn btn-primary" type="submit" value="Add"><input class="btn btn-primary" type="submit" value="Reset">
+               </form>
+          </div> 
+           <div> 
+                <table id="employee" class="tb">
+                    <thead>
+                        <tr>
+                            <th>FullName</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>City</th>
+                            <th>Actions</th>
+                        </tr>
+                  </thead>
+                    <tbody>
+
+                    </tbody>
+              </table>
+          </div> 
+      </div>
+   <script>
+    let row=null
+        function formsubmit()
+        {
+            event.preventDefault()
+            let formData=readForm()
+            if(row==null)
+            {
+            insertData(formData)
+            }
+            else{
+                formUpdate(formData)
+            }
+            reset()
+        }
+        function readForm()
+        {
+            const formData={}
+            formData["fullName"]=document.getElementById("fullName").value
+            formData["email"]=document.getElementById("email").value
+            formData["mobile"]=document.getElementById("mobile").value
+            formData["city"]=document.getElementById("city").value
+            return formData
+        }
+        function insertData(data)
+        {
+            let table=document.getElementsByTagName("tbody")[0]
+            let row=table.insertRow(table.length)
+
+            cell1=row.insertCell(0)
+            cell1.innerHTML=data.fullName
+
+            cell2=row.insertCell(1)
+            cell2.innerHTML=data.email
+
+            cell3=row.insertCell(2)
+            cell3.innerHTML=data.mobile
+
+            cell4=row.insertCell(3)
+            cell4.innerHTML=data.city
+
+            cell5=row.insertCell(4)
+            cell5.innerHTML=`<button onclick="formDelete(this)" class="btn btn-danger">Delete</button><button onclick="formEdit(this)"class="btn btn-primary">Edit</button>`
+            
+         }
+         function reset()
+         {
+            document.getElementById("fullName").value=""
+            document.getElementById("email").value=""
+            document.getElementById("mobile").value=""
+            document.getElementById("city").value=""
+         }
+         function formDelete(table)
+         {
+            row=table.parentElement.parentElement
+
+            document.getElementById("employee").deleteRow(row.rowIndex)
+         }
+         function formEdit(table)
+         {
+            row=table.parentElement.parentElement
+
+            document.getElementById("fullName").value=row.cells[0].innerHTML
+            document.getElementById("email").value=row.cells[1].innerHTML
+            document.getElementById("mobile").value=row.cells[2].innerHTML
+            document.getElementById("city").value=row.cells[3].innerHTML
+         }
+         function formUpdate(data)
+         {
+            row.cells[0].innerHTML=data.fullName
+            row.cells[1].innerHTML=data.email
+            row.cells[2].innerHTML=data.mobile
+            row.cells[3].innerHTML=data.city
+         }
+   </script> 
+</body>
+</html>
